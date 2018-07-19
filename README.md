@@ -38,11 +38,11 @@ var treemap = d3.treemap();
 
 ### Hierarchy
 
-Before you can compute a hierarchical layout, you need a root node. If your data is already in a hierarchical format, such as JSON, you can pass it directly to [d3.hierarchy](#hierarchy); otherwise, you can rearrange tabular data, such as comma-separated values (CSV), into a hierarchy using [d3.stratify](#stratify).
+在计算层次布局之前，你需要一个根节点。如果你的数据已经是层次结构，比如 `JSON`。你可以直接将其传递给 [d3.hierarchy](#hierarchy); 此外，你可以重新排列扁平数据，比如将 `CSV` 使用 [d3.stratify](#stratify) 重组为层次结构数据。
 
 <a name="hierarchy" href="#hierarchy">#</a> d3.<b>hierarchy</b>(<i>data</i>[, <i>children</i>]) [<>](https://github.com/d3/d3-hierarchy/blob/master/src/hierarchy/index.js#L12 "Source")
 
-Constructs a root node from the specified hierarchical *data*. The specified *data* must be an object representing the root node. For example:
+根据指定的层次结构数据构造一个根节点。指定的数据 *data* 必须为一个表示根节点的对象。比如:
 
 ```json
 {
@@ -80,7 +80,7 @@ Constructs a root node from the specified hierarchical *data*. The specified *da
 }
 ```
 
-The specified *children* accessor function is invoked for each datum, starting with the root *data*, and must return an array of data representing the children, or null if the current datum has no children. If *children* is not specified, it defaults to:
+指定的 *children* 访问器会为每个数据进行调用，从根 *data* 开始，并且必须返回一个数组用以表示当前数据的子节点，返回 `null` 表示当前数据没有子节点。如果没有指定 *children* 则默认为: 
 
 ```js
 function children(d) {
@@ -88,7 +88,7 @@ function children(d) {
 }
 ```
 
-The returned node and each descendant has the following properties:
+返回的节点和每一个后代会被附加如下属性:
 
 * *node*.data - the associated data, as specified to the [constructor](#hierarchy).
 * *node*.depth - zero for the root node, and increasing by one for each descendant generation.
@@ -97,11 +97,11 @@ The returned node and each descendant has the following properties:
 * *node*.children - an array of child nodes, if any; undefined for leaf nodes.
 * *node*.value - the summed value of the node and its [descendants](#node_descendants); optional, see [*node*.sum](#node_sum) and [*node*.count](#node_count).
 
-This method can also be used to test if a node is an `instanceof d3.hierarchy` and to extend the node prototype.
+这个方法也可以用来测试一个节点是否是 `instanceof d3.hierarchy` 并且可以用来扩展节点原型链。
 
 <a name="node_ancestors" href="#node_ancestors">#</a> <i>node</i>.<b>ancestors</b>() [<>](https://github.com/d3/d3-hierarchy/blob/master/src/hierarchy/ancestors.js "Source")
 
-Returns the array of ancestors nodes, starting with this node, then followed by each parent up to the root.
+返回祖先节点数组，第一个节点为自身，然后依次为从自身到根节点的所有节点。
 
 <a name="node_descendants" href="#node_descendants">#</a> <i>node</i>.<b>descendants</b>() [<>](https://github.com/d3/d3-hierarchy/blob/master/src/hierarchy/descendants.js "Source")
 
