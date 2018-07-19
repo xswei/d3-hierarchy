@@ -1,20 +1,20 @@
 # d3-hierarchy
 
-许多数据集从从本质上是嵌套结构的。考虑在 [geographic entities](https://www.census.gov/geo/reference/hierarchy.html) 应用场景中，比如人口普查，人口结构以及国家和州；企业和政府的组织结构；文件系统和软件包。甚至非层级的数据也可以被组合成层级数据结构，比如 [*k*-means clustering(*k* - means 聚类)](https://en.wikipedia.org/wiki/K-means_clustering) or [phylogenetic trees (生态系统树)](https://bl.ocks.org/mbostock/c034d66572fd6bd6815a)。
+Many datasets are intrinsically hierarchical. Consider [geographic entities](https://www.census.gov/geo/reference/hierarchy.html), such as census blocks, census tracts, counties and states; the command structure of businesses and governments; file systems and software packages. And even non-hierarchical data may be arranged empirically into a hierarchy, as with [*k*-means clustering](https://en.wikipedia.org/wiki/K-means_clustering) or [phylogenetic trees](https://bl.ocks.org/mbostock/c034d66572fd6bd6815a).
 
-这个模块实现了几种经典的对层次结构数据的可视化技术：
+This module implements several popular techniques for visualizing hierarchical data:
 
-**Node-link diagrams**(节点-链接图) 对节点和边使用离散的标记来展示拓扑结构，比如节点展示为圆并且父子节点之间使用线连接。[“tidy” tree](#tree) 结构更紧密，而 [dendrogram](#cluster) 则将所有的叶节点放置在同一水平线上。(它们都有极坐标系和笛卡尔坐标系两种形式。) [Indented trees(缩进树)](https://bl.ocks.org/mbostock/1093025) 对交互式展示很有用。
+**Node-link diagrams** show topology using discrete marks for nodes and links, such as a circle for each node and a line connecting each parent and child. The [“tidy” tree](#tree) is delightfully compact, while the [dendrogram](#cluster) places leaves at the same level. (These have both polar and Cartesian forms.) [Indented trees](https://bl.ocks.org/mbostock/1093025) are useful for interactive browsing.
 
-**Adjacency diagrams**(邻接图) 使用节点的相对位置展示拓扑结构。这种展示方式将每个节点编码为定量的区域，比如使用区域大小表示收入或文件大小。[“icicle” diagram](#partition) 使用矩形表示区域，而 “sunburst” 则使用分段环形图来表示。
+**Adjacency diagrams** show topology through the relative placement of nodes. They may also encode a quantitative dimension in the area of each node, for example to show revenue or file size. The [“icicle” diagram](#partition) uses rectangles, while the “sunburst” uses annular segments.
 
-**Enclosure diagrams**(包裹图) 也是一种区域编码，但是通过相互包含的形式来展示拓扑结构。[treemap](#treemap) 递归的将一个区域划分为更小的矩形区域。[Circle-packing](#pack) 则通过相互紧凑嵌套的圆来表示, 虽然空间利用率不高，但是能更明显的展示拓扑结构。
+**Enclosure diagrams** also use an area encoding, but show topology through containment. A [treemap](#treemap) recursively subdivides area into rectangles. [Circle-packing](#pack) tightly nests circles; this is not as space-efficient as a treemap, but perhaps more readily shows topology.
 
-一个好的层次结构可视化能促进快速的促进多尺度推理: 对单个单元的微观观察和对整体的宏观观察.
+A good hierarchical visualization facilitates rapid multiscale inference: micro-observations of individual elements and macro-observations of large groups.
 
 ## Installing
 
-`NPM` 安装：`npm install d3-hierarchy`. 此外还可以下载 [latest release](https://github.com/d3/d3-hierarchy/releases/latest). 可以直接从 [d3js.org](https://d3js.org) 以 [standalone library](https://d3js.org/d3-hierarchy.v1.min.js) 或作为 [D3 4.0](https://github.com/d3/d3) 的一部分直接载入. 支持 `AMD`, `CommonJS` 和基础的标签引入形式，如果使用标签引入则会暴露 `d3` 全局变量:
+If you use NPM, `npm install d3-hierarchy`. Otherwise, download the [latest release](https://github.com/d3/d3-hierarchy/releases/latest). You can also load directly from [d3js.org](https://d3js.org), either as a [standalone library](https://d3js.org/d3-hierarchy.v1.min.js) or as part of [D3 4.0](https://github.com/d3/d3). AMD, CommonJS, and vanilla environments are supported. In vanilla, a `d3` global is exported:
 
 ```html
 <script src="https://d3js.org/d3-hierarchy.v1.min.js"></script>
@@ -25,7 +25,7 @@ var treemap = d3.treemap();
 </script>
 ```
 
-[在浏览器中测试 `d3-hierarchy`.](https://tonicdev.com/npm/d3-hierarchy)
+[Try d3-hierarchy in your browser.](https://tonicdev.com/npm/d3-hierarchy)
 
 ## API Reference
 
