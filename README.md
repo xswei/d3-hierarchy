@@ -90,12 +90,12 @@ function children(d) {
 
 返回的节点和每一个后代会被附加如下属性:
 
-* *node*.data - the associated data, as specified to the [constructor](#hierarchy).
-* *node*.depth - zero for the root node, and increasing by one for each descendant generation.
-* *node*.height - zero for leaf nodes, and the greatest distance from any descendant leaf for internal nodes.
-* *node*.parent - the parent node, or null for the root node.
-* *node*.children - an array of child nodes, if any; undefined for leaf nodes.
-* *node*.value - the summed value of the node and its [descendants](#node_descendants); optional, see [*node*.sum](#node_sum) and [*node*.count](#node_count).
+* *node*.data - 关联的数据，由 [constructor](#hierarchy) 指定.
+* *node*.depth - 当前节点的深度, 根节点为 `0`.
+* *node*.height - 当前节点的高度, 叶节点为 `0`.
+* *node*.parent - 当前节点的父节点, 根节点为 `null`.
+* *node*.children - 当前节点的孩子节点(如果有的话); 叶节点为 `undefined`.
+* *node*.value - 当前节点以及 [descendants](#node_descendants)(后代节点) 的总计值; 可以通过 [*node*.sum](#node_sum) 和 [*node*.count](#node_count) 计算.
 
 这个方法也可以用来测试一个节点是否是 `instanceof d3.hierarchy` 并且可以用来扩展节点原型链。
 
@@ -105,19 +105,19 @@ function children(d) {
 
 <a name="node_descendants" href="#node_descendants">#</a> <i>node</i>.<b>descendants</b>() [<>](https://github.com/d3/d3-hierarchy/blob/master/src/hierarchy/descendants.js "Source")
 
-Returns the array of descendant nodes, starting with this node, then followed by each child in topological order.
+返回后代节点数组，第一个节点为自身，然后依次为所有子节点的拓扑排序。
 
 <a name="node_leaves" href="#node_leaves">#</a> <i>node</i>.<b>leaves</b>() [<>](https://github.com/d3/d3-hierarchy/blob/master/src/hierarchy/leaves.js "Source")
 
-Returns the array of leaf nodes in traversal order; leaves are nodes with no children.
+返回叶节点数组，叶节点是没有孩子节点的节点。
 
 <a name="node_path" href="#node_path">#</a> <i>node</i>.<b>path</b>(<i>target</i>) [<>](https://github.com/d3/d3-hierarchy/blob/master/src/hierarchy/path.js "Source")
 
-Returns the shortest path through the hierarchy from this *node* to the specified *target* node. The path starts at this *node*, ascends to the least common ancestor of this *node* and the *target* node, and then descends to the *target* node. This is particularly useful for [hierarchical edge bundling](https://bl.ocks.org/mbostock/7607999).
+返回从当前 *node* 到指定 *target* 节点的最短路径。路径从当前节点开始，遍历到当前 *node* 和 *target* 节点共同最近祖先，然后到 *target* 节点。这个方法对 [hierarchical edge bundling](https://bl.ocks.org/mbostock/7607999)(分层边捆绑) 很有用。
 
 <a name="node_links" href="#node_links">#</a> <i>node</i>.<b>links</b>() [<>](https://github.com/d3/d3-hierarchy/blob/master/src/hierarchy/links.js "Source")
 
-Returns an array of links for this *node*, where each *link* is an object that defines source and target properties. The source of each link is the parent node, and the target is a child node.
+返回当前 *node* 的 `links` 数组, 其中每个 *link* 是一个定义了 *source* 和 *target* 属性的对象。每个 `link` 的 `source` 为父节点, `target` 为子节点。
 
 <a name="node_sum" href="#node_sum">#</a> <i>node</i>.<b>sum</b>(<i>value</i>) [<>](https://github.com/d3/d3-hierarchy/blob/master/src/hierarchy/sum.js "Source")
 
@@ -178,11 +178,11 @@ You must call *node*.sort before invoking a hierarchical layout if you want the 
 
 <a name="node_each" href="#node_each">#</a> <i>node</i>.<b>each</b>(<i>function</i>) [<>](https://github.com/d3/d3-hierarchy/blob/master/src/hierarchy/each.js "Source")
 
-Invokes the specified *function* for *node* and each descendant in [breadth-first order](https://en.wikipedia.org/wiki/Breadth-first_search), such that a given *node* is only visited if all nodes of lesser depth have already been visited, as well as all preceding nodes of the same depth. The specified function is passed the current *node*.
+以 [breadth-first order](https://en.wikipedia.org/wiki/Breadth-first_search)(广度优先) 的次序为每个 *node* 调用执行的 *function*, 一个给定的节点只有在比其深度更小或者在此节点之前的相同深度的节点都被访问过之后才会被访问。指定的函数会将当前 *node* 作为参数。
 
 <a name="node_eachAfter" href="#node_eachAfter">#</a> <i>node</i>.<b>eachAfter</b>(<i>function</i>) [<>](https://github.com/d3/d3-hierarchy/blob/master/src/hierarchy/eachAfter.js "Source")
 
-Invokes the specified *function* for *node* and each descendant in [post-order traversal](https://en.wikipedia.org/wiki/Tree_traversal#Post-order), such that a given *node* is only visited after all of its descendants have already been visited. The specified function is passed the current *node*.
+以 [post-order traversal](https://en.wikipedia.org/wiki/Tree_traversal#Post-order)(后序遍历) 的次序为每个 *node* 调用执行的 *function*，当每个节点被访问前，其所有的后代节点都已经被访问过。指定的函数会将当前 *node* 作为参数。
 
 <a name="node_eachBefore" href="#node_eachBefore">#</a> <i>node</i>.<b>eachBefore</b>(<i>function</i>) [<>](https://github.com/d3/d3-hierarchy/blob/master/src/hierarchy/eachBefore.js "Source")
 
