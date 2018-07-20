@@ -121,13 +121,13 @@ function children(d) {
 
 <a name="node_sum" href="#node_sum">#</a> <i>node</i>.<b>sum</b>(<i>value</i>) [<>](https://github.com/d3/d3-hierarchy/blob/master/src/hierarchy/sum.js "Source")
 
-Evaluates the specified *value* function for this *node* and each descendant in [post-order traversal](#node_eachAfter), and returns this *node*. The *node*.value property of each node is set to the numeric value returned by the specified function plus the combined value of all descendants. The function is passed the node’s data, and must return a non-negative number. The *value* accessor is evaluated for *node* and every descendant, including internal nodes; if you only want leaf nodes to have internal value, then return zero for any node with children. [For example](http://bl.ocks.org/mbostock/b4c0f143db88a9eb01a315a1063c1d77), as an alternative to [*node*.count](#node_count):
+从当前 *node* 开始以 [post-order traversal](#node_eachAfter) 的次序为当前节点以及每个后代节点调用指定的 *value* 函数，并返回当前 *node*。这个过程会为每个节点附加 *node*.value 数值属性，属性值是当前节点的 `value` 值和所有后代的 `value` 的合计，函数的返回值必须为非负数值类型。*value* 访问器会为当前节点和每个后代节点进行评估，包括内部结点；如果你仅仅想让叶节点拥有内部值，则可以在遍历到叶节点时返回 `0`。例如 [这个例子](http://bl.ocks.org/mbostock/b4c0f143db88a9eb01a315a1063c1d77)，使用如下设置等价于 [*node*.count](#node_count):
 
 ```js
 root.sum(function(d) { return d.value ? 1 : 0; });
 ```
 
-You must call *node*.sum or [*node*.count](#node_count) before invoking a hierarchical layout that requires *node*.value, such as [d3.treemap](#treemap). Since the API supports [method chaining](https://en.wikipedia.org/wiki/Method_chaining), you can invoke *node*.sum and [*node*.sort](#node_sort) before computing the layout, and then subsequently generate an array of all [descendant nodes](#node_descendants) like so:
+在进行层次布局之前必须调用 *node*.sum 或 [*node*.count](#node_count)，因为布局需要 *node*.value 属性，比如 [d3.treemap](#treemap)。`API` 支持方法的 [method chaining](https://en.wikipedia.org/wiki/Method_chaining) (链式调用), 因此你可以在计算布局之前调用 *node*.sum 和 [*node*.sort](#node_sort), 随后生成 [descendant nodes](#node_descendants) 数组, 比如:
 
 ```js
 var treemap = d3.treemap()
@@ -140,17 +140,17 @@ var nodes = treemap(root
   .descendants();
 ```
 
-This example assumes that the node data has a value field.
+这个例子假设 `node` 数据包含 `value` 字段.
 
 <a name="node_count" href="#node_count">#</a> <i>node</i>.<b>count</b>() [<>](https://github.com/d3/d3-hierarchy/blob/master/src/hierarchy/count.js "Source")
 
-Computes the number of leaves under this *node* and assigns it to *node*.value, and similarly for every descendant of *node*. If this *node* is a leaf, its count is one. Returns this *node*. See also [*node*.sum](#node_sum).
+计算当前 *node* 下所有叶节点的数量，并将其分配到 *node*.value 属性, 同时该节点的所有后代节点也会被自动计算其所属下的所有叶节点数量。如果 *node* 为叶节点则 `count` 为 `1`。该操作返回当前 *node*。对比 [*node*.sum](#node_sum)。
 
 <a name="node_sort" href="#node_sort">#</a> <i>node</i>.<b>sort</b>(<i>compare</i>) [<>](https://github.com/d3/d3-hierarchy/blob/master/src/hierarchy/sort.js "Source")
 
-Sorts the children of this *node*, if any, and each of this *node*’s descendants’ children, in [pre-order traversal](#node_eachBefore) using the specified *compare* function, and returns this *node*. The specified function is passed two nodes *a* and *b* to compare. If *a* should be before *b*, the function must return a value less than zero; if *b* should be before *a*, the function must return a value greater than zero; otherwise, the relative order of *a* and *b* are not specified. See [*array*.sort](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/sort) for more.
+以 [pre-order traversal](#node_eachBefore) 的次序对当前 *node* 以及其所有的后代节点的子节点进行排序，指定的 *compare* 函数以 *a* 和 *b* 两个节点为参数。返回当前 *node*。如果 *a* 在 *b* 前面则应该返回一个比 `0` 小的值，如果 *b* 应该在 *a* 前面则返回一个比 `0` 大的值，否则不改变 *a* 和 *b* 的相对位置。参考 [*array*.sort](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/sort) 获取更多信息。
 
-Unlike [*node*.sum](#node_sum), the *compare* function is passed two [nodes](#hierarchy) rather than two nodes’ data. For example, if the data has a value property, this sorts nodes by the descending aggregate value of the node and all its descendants, as is recommended for [circle-packing](#pack):
+与 [*node*.sum](#node_sum) 不同，*compare* 函数传递两个 [nodes](#hierarchy) 实例而不是两个节点的数据。例如，如果数据包含 `value` 属性，则根据节点以及此节点所有的后续节点的聚合值进行降序排序，就像 [circle-packing](#pack) 一样:
 
 ```js
 root
@@ -158,7 +158,7 @@ root
     .sort(function(a, b) { return b.value - a.value; });
 ``````
 
-Similarly, to sort nodes by descending height (greatest distance from any descendant leaf) and then descending value, as is recommended for [treemaps](#treemap) and [icicles](#partition):
+类似的，按高度降序排列 (与任何后代的距离最远) 然后按值降序排列，是绘制 [treemaps](#treemap) 和 [icicles](#partition) 的推荐排序方式:
 
 ```js
 root
@@ -166,7 +166,7 @@ root
     .sort(function(a, b) { return b.height - a.height || b.value - a.value; });
 ```
 
-To sort nodes by descending height and then ascending id, as is recommended for [trees](#tree) and [dendrograms](#cluster):
+先对高度进行降序，然后按照 `id` 进行升序排列，是绘制 [trees](#tree) 和 [dendrograms](#cluster) 的推荐排序方式:
 
 ```js
 root
@@ -174,7 +174,7 @@ root
     .sort(function(a, b) { return b.height - a.height || a.id.localeCompare(b.id); });
 ```
 
-You must call *node*.sort before invoking a hierarchical layout if you want the new sort order to affect the layout; see [*node*.sum](#node_sum) for an example.
+如果想在可视化布局中使用排序，则在调用层次布局之前，必须先调用 *node*.sort；参考 [*node*.sum](#node_sum)。
 
 <a name="node_each" href="#node_each">#</a> <i>node</i>.<b>each</b>(<i>function</i>) [<>](https://github.com/d3/d3-hierarchy/blob/master/src/hierarchy/each.js "Source")
 
@@ -186,15 +186,15 @@ You must call *node*.sort before invoking a hierarchical layout if you want the 
 
 <a name="node_eachBefore" href="#node_eachBefore">#</a> <i>node</i>.<b>eachBefore</b>(<i>function</i>) [<>](https://github.com/d3/d3-hierarchy/blob/master/src/hierarchy/eachBefore.js "Source")
 
-Invokes the specified *function* for *node* and each descendant in [pre-order traversal](https://en.wikipedia.org/wiki/Tree_traversal#Pre-order), such that a given *node* is only visited after all of its ancestors have already been visited. The specified function is passed the current *node*.
+以 [pre-order traversal](https://en.wikipedia.org/wiki/Tree_traversal#Pre-order)(前序遍历) 的次序为每个 *node* 调用执行的 *function*，当每个节点被访问前，其所有的祖先节点都已经被访问过。指定的函数会将当前 *node* 作为参数。
 
 <a name="node_copy" href="#node_copy">#</a> <i>node</i>.<b>copy</b>() [<>](https://github.com/d3/d3-hierarchy/blob/master/src/hierarchy/index.js#L39 "Source")
 
-Return a deep copy of the subtree starting at this *node*. (The returned deep copy shares the same data, however.) The returned node is the root of a new tree; the returned node’s parent is always null and its depth is always zero.
+以当前节点 *node* 为根节点，返回子树的深拷贝副本。(但是副本与当前子树仍然共享同一份数据)。当前节点为返回子树的根节点，返回的节点的 `parent` 属性总是 `null` 并且 `depth` 总是 `0`.
 
 #### Stratify
 
-Consider the following table of relationships:
+考虑如下关系的列表:
 
 Name  | Parent
 ------|--------
@@ -208,7 +208,7 @@ Awan  | Eve
 Enoch | Awan
 Azura | Eve
 
-These names are conveniently unique, so we can unambiguously represent the hierarchy as a CSV file:
+这些名称时独一无二的，因此我们可以将上述表示层级数据的列表表示为 `CSV` 文件：
 
 ```
 name,parent
@@ -223,13 +223,13 @@ Enoch,Awan
 Azura,Eve
 ```
 
-To parse the CSV using [d3.csvParse](https://github.com/d3/d3-dsv#csvParse):
+解析 `CSV` 使用 [d3.csvParse](https://github.com/xs-wei/d3-dsv#csvParse):
 
 ```js
 var table = d3.csvParse(text);
 ```
 
-This returns:
+然后返回:
 
 ```json
 [
@@ -245,7 +245,7 @@ This returns:
 ]
 ```
 
-To convert to a hierarchy:
+转为层次结构数据:
 
 ```js
 var root = d3.stratify()
@@ -254,23 +254,23 @@ var root = d3.stratify()
     (table);
 ```
 
-This returns:
+返回:
 
 [<img alt="Stratify" src="https://raw.githubusercontent.com/d3/d3-hierarchy/master/img/stratify.png">](https://tonicdev.com/mbostock/56fed33d8630b01300f72daa)
 
-This hierarchy can now be passed to a hierarchical layout, such as [d3.tree](#_tree), for visualization.
+此时的层次数据才可以被传递给层次布局来可视化，比如 [d3.tree](#_tree).
 
 <a name="stratify" href="#stratify">#</a> d3.<b>stratify</b>() [<>](https://github.com/d3/d3-hierarchy/blob/master/src/stratify.js "Source")
 
-Constructs a new stratify operator with the default settings.
+使用默认的配置构造一个新的 `stratify`(分层) 操作。
 
 <a name="_stratify" href="#_stratify">#</a> <i>stratify</i>(<i>data</i>) [<>](https://github.com/d3/d3-hierarchy/blob/master/src/stratify.js#L20 "Source")
 
-Generates a new hierarchy from the specified tabular *data*.
+根据执行的扁平 *data* 生成一个新的层次结构数据.
 
 <a name="stratify_id" href="#stratify_id">#</a> <i>stratify</i>.<b>id</b>([<i>id</i>]) [<>](https://github.com/d3/d3-hierarchy/blob/master/src/stratify.js#L64 "Source")
 
-If *id* is specified, sets the id accessor to the given function and returns this stratify operator. Otherwise, returns the current id accessor, which defaults to:
+如果指定了 *id*, 则将 `id` 访问器设置为指定的函数并返回分层操作。否则返回当前的 `id` 访问器, 默认为:
 
 ```js
 function id(d) {
@@ -278,11 +278,11 @@ function id(d) {
 }
 ```
 
-The id accessor is invoked for each element in the input data passed to the [stratify operator](#_stratify), being passed the current datum (*d*) and the current index (*i*). The returned string is then used to identify the node’s relationships in conjunction with the [parent id](#stratify_parentId). For leaf nodes, the id may be undefined; otherwise, the id must be unique. (Null and the empty string are equivalent to undefined.)
+`id` 访问器会为每个输入到 [stratify operator](#_stratify) 的数据元素进行调用，并传递当前数据 *d* 以及当前索引 *i*. 返回的字符串会被用来识别节点与 [parent id](#stratify_parentId)(父节点 `id`) 之间的关系。对于叶节点，`id` 可能是 `undefined`; 此外 `id` 必须是唯一的。(`Null` 和空字符串等价于 `undefined`).
 
 <a name="stratify_parentId" href="#stratify_parentId">#</a> <i>stratify</i>.<b>parentId</b>([<i>parentId</i>]) [<>](https://github.com/d3/d3-hierarchy/blob/master/src/stratify.js#L68 "Source")
 
-If *parentId* is specified, sets the parent id accessor to the given function and returns this stratify operator. Otherwise, returns the current parent id accessor, which defaults to:
+如果指定了 *parentId*，则将当前父节点 `id` 访问器设置为给定的函数，并返回分层操作。否则返回当前父节点 `id` 访问器, 默认为:
 
 ```js
 function parentId(d) {
@@ -290,7 +290,7 @@ function parentId(d) {
 }
 ```
 
-The parent id accessor is invoked for each element in the input data passed to the [stratify operator](#_stratify), being passed the current datum (*d*) and the current index (*i*). The returned string is then used to identify the node’s relationships in conjunction with the [id](#stratify_id). For the root node, the parent id should be undefined. (Null and the empty string are equivalent to undefined.) There must be exactly one root node in the input data, and no circular relationships.
+父节点 `id` 访问器会为每个输入的元素进行调用，并传递当前元素 *d* 以及当前索引 *i*. 返回的字符串用来识别节点与 [id](#stratify_id) 的关系。对于根节点, 其父节点 `id` 应该为 `undefined`。(`Null` 和空字符串等价于 `undefined`)。输入数据必须有一个根节点并且没有循环引用关系。
 
 ### Cluster
 
