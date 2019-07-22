@@ -449,15 +449,15 @@ function separation(a, b) {
 
 <a name="treemapDice" href="#treemapDice">#</a> d3.<b>treemapDice</b>(<i>node</i>, <i>x0</i>, <i>y0</i>, <i>x1</i>, <i>y1</i>) [<源码>](https://github.com/d3/d3-hierarchy/blob/master/src/treemap/dice.js "Source")
 
-Divides the rectangular area specified by *x0*, *y0*, *x1*, *y1* horizontally according the value of each of the specified *node*’s children. The children are positioned in order, starting with the left edge (*x0*) of the given rectangle. If the sum of the children’s values is less than the specified *node*’s value (*i.e.*, if the specified *node* has a non-zero internal value), the remaining empty space will be positioned on the right edge (*x1*) of the given rectangle.
+将通过指定 *x0*, *y0*, *x1*, *y1* 所指定的矩形区域按指定节点的每个子节点的值水平分割. 子节点按顺序排列, 从给定矩形的左边缘 (*x0*) 开始. 如果子节点值的和小于指定节点值(比如指定的节点具有非零的内部值), 剩余的空白将定位在给定矩形的右边缘 (*x1*).
 
 <a name="treemapSlice" href="#treemapSlice">#</a> d3.<b>treemapSlice</b>(<i>node</i>, <i>x0</i>, <i>y0</i>, <i>x1</i>, <i>y1</i>) [<源码>](https://github.com/d3/d3-hierarchy/blob/master/src/treemap/slice.js "Source")
 
-Divides the rectangular area specified by *x0*, *y0*, *x1*, *y1* vertically according the value of each of the specified *node*’s children. The children are positioned in order, starting with the top edge (*y0*) of the given rectangle. If the sum of the children’s values is less than the specified *node*’s value (*i.e.*, if the specified *node* has a non-zero internal value), the remaining empty space will be positioned on the bottom edge (*y1*) of the given rectangle.
+将通过指定 *x0*, *y0*, *x1*, *y1* 所指定的矩形区域按指定节点的每个子节点的值垂直分割. 子节点按顺序排列, 从给定矩形的上边缘 (*y0*) 开始. 如果子节点值的和小于指定节点值(比如指定的节点具有非零的内部值), 剩余的空白将定位在给定矩形的下边缘 (*y1*).
 
 <a name="treemapSliceDice" href="#treemapSliceDice">#</a> d3.<b>treemapSliceDice</b>(<i>node</i>, <i>x0</i>, <i>y0</i>, <i>x1</i>, <i>y1</i>) [<源码>](https://github.com/d3/d3-hierarchy/blob/master/src/treemap/sliceDice.js "Source")
 
-If the specified *node* has odd depth, delegates to [treemapSlice](#treemapSlice); otherwise delegates to [treemapDice](#treemapDice).
+如果指定的节点深度为奇数, 则使用 [treemapSlice](#treemapSlice) 算法; 否则使用 [treemapDice](#treemapDice) 算法.
 
 <a name="treemapSquarify" href="#treemapSquarify">#</a> d3.<b>treemapSquarify</b>(<i>node</i>, <i>x0</i>, <i>y0</i>, <i>x1</i>, <i>y1</i>) [<源码>](https://github.com/d3/d3-hierarchy/blob/master/src/treemap/squarify.js "Source")
 
@@ -465,7 +465,7 @@ If the specified *node* has odd depth, delegates to [treemapSlice](#treemapSlice
 
 <a name="treemapResquarify" href="#treemapResquarify">#</a> d3.<b>treemapResquarify</b>(<i>node</i>, <i>x0</i>, <i>y0</i>, <i>x1</i>, <i>y1</i>) [<源码>](https://github.com/d3/d3-hierarchy/blob/master/src/treemap/resquarify.js "Source")
 
-Like [d3.treemapSquarify](#treemapSquarify), except preserves the topology (node adjacencies) of the previous layout computed by d3.treemapResquarify, if there is one and it used the same [target aspect ratio](#squarify_ratio). This tiling method is good for animating changes to treemaps because it only changes node sizes and not their relative positions, thus avoiding distracting shuffling and occlusion. The downside of a stable update, however, is a suboptimal layout for subsequent updates: only the first layout uses the Bruls *et al.* squarified algorithm.
+与 [d3.treemapSquarify](#treemapSquarify) 类似, 除了保存 `d3.treemapResquarify` 计算的前一个布局的拓扑(节点邻接)外, 如果有拓扑则使用相同的 [target aspect ratio](#squarify_ratio). 这种平铺方法很适合对矩阵树图的更改进行动画处理, 因为它只更改节点大小, 而不更改它们的相对位置, 从而避免了分散注意力的移动和遮挡. 但是也有缺点, 后续的更新布局可能不够理想: 只有第一次布局使用 `Bruls` 等人的平方算法.
 
 <a name="squarify_ratio" href="#squarify_ratio">#</a> <i>squarify</i>.<b>ratio</b>(<i>ratio</i>) [<源码>](https://github.com/d3/d3-hierarchy/blob/master/src/treemap/squarify.js#L58 "Source")
 
